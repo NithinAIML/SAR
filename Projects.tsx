@@ -45,59 +45,90 @@ const Projects: React.FC<ProjectsProps> = ({ showToast }) => {
   const statusClasses = (status: Project["status"]) => {
     switch (status) {
       case "Running":
-        return "bg-emerald-100 text-emerald-700";
+        return "background-color:#dcfce7;color:#166534;";
       case "In Review":
-        return "bg-amber-100 text-amber-700";
+        return "background-color:#fef3c7;color:#92400e;";
       case "Queued":
       default:
-        return "bg-slate-100 text-slate-700";
+        return "background-color:#e5e7eb;color:#374151;";
     }
   };
 
-  const riskTone = (score: number) => {
-    if (score >= 80) return "bg-rose-100 text-rose-700";
-    if (score >= 60) return "bg-amber-100 text-amber-700";
-    return "bg-emerald-100 text-emerald-700";
+  const riskClasses = (score: number) => {
+    if (score >= 80) return "background-color:#fee2e2;color:#991b1b;";
+    if (score >= 60) return "background-color:#fef3c7;color:#92400e;";
+    return "background-color:#dcfce7;color:#166534;";
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page heading */}
-      <div>
-        <h2 className="text-2xl font-semibold text-slate-900">Projects</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Active security readiness initiatives and their current risk posture.
-        </p>
-      </div>
+    <div style={{ paddingTop: "0.5rem" }}>
+      <h2 style={{ fontSize: "1.7rem", fontWeight: 700, marginBottom: "0.3rem" }}>
+        Projects
+      </h2>
+      <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "1.3rem" }}>
+        Active security readiness initiatives and their current risk posture.
+      </p>
 
-      {/* Project list */}
-      <div className="space-y-4">
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {projects.map((p) => (
           <article
             key={p.id}
-            className="rounded-xl border border-slate-200 bg-white/70 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            style={{
+              padding: "1.1rem 1.3rem",
+              borderRadius: "0.9rem",
+              border: "1px solid #e5e7eb",
+              backgroundColor: "rgba(255,255,255,0.95)",
+              boxShadow: "0 3px 10px rgba(15,23,42,0.06)",
+            }}
           >
-            {/* Top row: title + actions */}
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="space-y-1">
-                <h3 className="text-lg font-semibold text-slate-900">
+            {/* Top row */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                gap: "0.75rem",
+              }}
+            >
+              <div>
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: "1.1rem",
+                    fontWeight: 600,
+                    color: "#111827",
+                  }}
+                >
                   {p.name}
                 </h3>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "0.4rem",
+                    marginTop: "0.45rem",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <span
-                    className={
-                      "inline-flex items-center rounded-full px-2.5 py-0.5 font-medium " +
-                      statusClasses(p.status)
-                    }
+                    style={{
+                      borderRadius: 999,
+                      padding: "0.15rem 0.6rem",
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      ...styleFromString(statusClasses(p.status)),
+                    }}
                   >
                     {p.status}
                   </span>
                   <span
-                    className={
-                      "inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold " +
-                      riskTone(p.riskScore)
-                    }
+                    style={{
+                      borderRadius: 999,
+                      padding: "0.15rem 0.6rem",
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      ...styleFromString(riskClasses(p.riskScore)),
+                    }}
                   >
                     Risk {p.riskScore}
                   </span>
@@ -106,23 +137,44 @@ const Projects: React.FC<ProjectsProps> = ({ showToast }) => {
 
               <button
                 onClick={() => deleteProject(p.id)}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+                style={{
+                  borderRadius: "0.6rem",
+                  border: "1px solid #fecaca",
+                  backgroundColor: "#fee2e2",
+                  color: "#b91c1c",
+                  padding: "0.35rem 0.75rem",
+                  fontSize: "0.78rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
               >
                 Delete
               </button>
             </div>
 
             {/* Meta info */}
-            <div className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-3">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
+                gap: "0.4rem",
+                marginTop: "0.9rem",
+                fontSize: "0.9rem",
+                color: "#374151",
+              }}
+            >
               <p>
-                <span className="font-medium text-slate-500">ID:</span> {p.id}
+                <span style={{ color: "#6b7280", fontWeight: 500 }}>ID:</span>{" "}
+                {p.id}
               </p>
               <p>
-                <span className="font-medium text-slate-500">Owner:</span>{" "}
+                <span style={{ color: "#6b7280", fontWeight: 500 }}>Owner:</span>{" "}
                 {p.owner}
               </p>
               <p>
-                <span className="font-medium text-slate-500">Risk Score:</span>{" "}
+                <span style={{ color: "#6b7280", fontWeight: 500 }}>
+                  Risk Score:
+                </span>{" "}
                 {p.riskScore}
               </p>
             </div>
@@ -130,14 +182,26 @@ const Projects: React.FC<ProjectsProps> = ({ showToast }) => {
         ))}
 
         {projects.length === 0 && (
-          <p className="text-sm text-slate-500">
-            No active projects. Start a new assessment from the “New Project”
-            button in the header.
+          <p style={{ fontSize: "0.9rem", color: "#6b7280" }}>
+            No active projects. Use “New Project” in the header to start a new
+            assessment.
           </p>
         )}
       </div>
     </div>
   );
 };
+
+/* helper: convert "a:b;c:d" into a style object */
+function styleFromString(style: string): React.CSSProperties {
+  const obj: Record<string, string> = {};
+  style.split(";").forEach((s) => {
+    const [k, v] = s.split(":");
+    if (!k || !v) return;
+    const key = k.trim().replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    obj[key] = v.trim();
+  });
+  return obj;
+}
 
 export default Projects;

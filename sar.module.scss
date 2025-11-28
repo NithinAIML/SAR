@@ -1,4 +1,5 @@
-/* Root layout */
+/* ===== App Shell ===== */
+
 .consoleContainer {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 100vh;
@@ -11,7 +12,6 @@
   align-items: flex-start;
 }
 
-/* White app shell */
 .shell {
   width: 100%;
   max-width: 1200px;
@@ -23,7 +23,8 @@
   flex-direction: column;
 }
 
-/* Header */
+/* ===== Header ===== */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -99,42 +100,48 @@
   filter: brightness(1.03);
 }
 
-/* Tabs bar */
+/* ===== Tabs ===== */
+
 .tabsWrapper {
   padding: 0.75rem 2rem 0.9rem;
   border-bottom: 1px solid #e5e7eb;
   background-color: #ffffff;
 }
 
-/* Style tabs component buttons when inside tabsWrapper */
-.tabsWrapper button {
+/* inner flex container used by Tabs.tsx */
+.tabsInner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* individual tab button */
+.tabButton {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
   background-color: #f3f4f6;
   border: 1px solid #e5e7eb;
-  color: #4b5563;
-  padding: 0.55rem 1.1rem;
-  margin-right: 0.5rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
+  color: #374151;
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all 0.16s ease;
 }
 
-.tabsWrapper button:hover {
-  background-color: #e5edff;
-  border-color: #2563eb;
-  color: #1d4ed8;
+.tabButton:hover {
+  background-color: #e5e7eb;
 }
 
-/* If your Tabs.tsx adds an "active" class, this will be applied */
-.tabsWrapper button.active {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border-color: transparent;
+.tabButtonActive {
+  background-color: #2563eb;
   color: #ffffff;
-  box-shadow: 0 8px 14px rgba(37, 99, 235, 0.35);
+  border-color: #2563eb;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
 }
 
-/* Main content area */
+/* ===== Main Content ===== */
+
 .mainContent {
   padding: 1.5rem 2rem 2rem;
   background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
@@ -142,14 +149,8 @@
   box-sizing: border-box;
 }
 
-/* Toast (wrapper) – your Toast.tsx still uses its own Tailwind classes */
-.toast {
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-}
+/* ===== Modal ===== */
 
-/* Modal overlay */
 .modal {
   position: fixed;
   inset: 0;
@@ -160,7 +161,6 @@
   z-index: 1200;
 }
 
-/* Modal card */
 .modalCard {
   width: 420px;
   max-width: 90%;
@@ -206,7 +206,8 @@
   background-color: #e5e7eb;
 }
 
-/* Responsive */
+/* ===== Responsive ===== */
+
 @media (max-width: 900px) {
   .consoleContainer {
     padding: 1.25rem;

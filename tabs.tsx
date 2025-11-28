@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../securityreadiness/SecurityReadinessConsole.module.scss";
 
 interface TabsProps {
   activeTab: string;
@@ -17,20 +18,19 @@ const TABS = [
 
 const Tabs: React.FC<TabsProps> = ({ activeTab, onTabChange }) => {
   return (
-    <nav className="flex flex-wrap gap-2">
+    <nav className={styles.tabsInner} aria-label="Security Readiness sections">
       {TABS.map((tab) => {
         const isActive = activeTab === tab.id;
 
         return (
           <button
             key={tab.id}
+            type="button"
             onClick={() => onTabChange(tab.id)}
-            className={
-              "rounded-full px-4 py-2 text-sm font-medium border transition-all " +
-              (isActive
-                ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200")
-            }
+            className={`${styles.tabButton} ${
+              isActive ? styles.tabButtonActive : ""
+            }`}
+            aria-current={isActive ? "page" : undefined}
           >
             {tab.label}
           </button>
