@@ -5,34 +5,33 @@ interface TabsProps {
   onTabChange: (tab: string) => void;
 }
 
+const tabs = [
+  { id: "dashboard", label: "Dashboard" },
+  { id: "projects", label: "Projects" },
+  { id: "agents", label: "Agents" },
+  { id: "queue", label: "Queue" },
+  { id: "lifecycle", label: "Lifecycle" },
+  { id: "knowledge", label: "Knowledge" },
+  { id: "settings", label: "Settings" },
+];
+
 const Tabs: React.FC<TabsProps> = ({ activeTab, onTabChange }) => {
-  const tabs = [
-    "dashboard",
-    "projects",
-    "agents",
-    "queue",
-    "lifecycle",
-    "knowledge",
-    "settings",
-  ];
-
   return (
-    <nav className="flex flex-wrap gap-2">
-      {tabs.map((t) => {
-        const isActive = activeTab === t;
-        const label = t.charAt(0).toUpperCase() + t.slice(1);
-
-        return (
-          <button
-            key={t}
-            type="button"
-            onClick={() => onTabChange(t)}
-            className={isActive ? "active" : ""}
-          >
-            {label}
-          </button>
-        );
-      })}
+    <nav
+      className="flex flex-wrap gap-2"
+      aria-label="Security Readiness sections"
+    >
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          type="button"
+          onClick={() => onTabChange(tab.id)}
+          className={activeTab === tab.id ? "active" : ""}
+          aria-current={activeTab === tab.id ? "page" : undefined}
+        >
+          {tab.label}
+        </button>
+      ))}
     </nav>
   );
 };
