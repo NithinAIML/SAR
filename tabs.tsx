@@ -17,27 +17,20 @@ const TABS = [
 
 const Tabs: React.FC<TabsProps> = ({ activeTab, onTabChange }) => {
   return (
-    <nav
-      className="flex flex-wrap gap-2"
-      aria-label="Security Readiness sections"
-    >
+    <nav className="flex flex-wrap gap-2">
       {TABS.map((tab) => {
         const isActive = activeTab === tab.id;
-
-        const base =
-          "rounded-full px-3.5 py-1.5 text-xs font-medium border transition-colors";
-        const activeClasses =
-          "bg-blue-600 text-white border-transparent shadow-sm";
-        const inactiveClasses =
-          "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
 
         return (
           <button
             key={tab.id}
-            type="button"
             onClick={() => onTabChange(tab.id)}
-            className={`${base} ${isActive ? activeClasses : inactiveClasses}`}
-            aria-current={isActive ? "page" : undefined}
+            className={
+              "rounded-full px-4 py-2 text-sm font-medium border transition-all " +
+              (isActive
+                ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200")
+            }
           >
             {tab.label}
           </button>
