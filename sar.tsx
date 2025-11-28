@@ -8,9 +8,17 @@ import Agents from "../Agents";
 import Lifecycle from "../Lifecycle";
 import Knowledge from "../Knowledge";
 import Settings from "../Settings";
-// import Toast from "../Toast";
-// import Modal from "../Modal";
 import styles from "./SecurityReadinessConsole.module.scss";
+
+const TAB_LABELS: Record<string, string> = {
+  dashboard: "Dashboard",
+  projects: "Projects",
+  queue: "Queue",
+  agents: "Agents",
+  lifecycle: "Lifecycle",
+  knowledge: "Knowledge",
+  settings: "Settings",
+};
 
 const SecurityReadinessConsole: React.FC = () => {
   const [tab, setTab] = useState("dashboard");
@@ -24,53 +32,78 @@ const SecurityReadinessConsole: React.FC = () => {
 
   return (
     <div className={styles.consoleContainer}>
-      {/* Shell centers everything and gives nice card feel */}
       <div className={styles.shell}>
-        {/* Top app bar */}
-        <header className={styles.header}>
-          <div>
-            <div className={styles.productBadge}>Security</div>
-            <h1 className={styles.title}>Security Readiness AI Console</h1>
-            <p className={styles.subtitle}>
-              Monitor projects, agents, and readiness insights in one place.
-            </p>
+        {/* Top navigation bar */}
+        <header className={styles.topBar}>
+          <div className={styles.logoBlock}>
+            <span className={styles.productBadge}>Security</span>
+            <span className={styles.productName}>Security Readiness AI Console</span>
           </div>
-
-          {/* Right side – placeholder for user/avatar/settings */}
-          <div className={styles.headerActions}>
-            <button className={styles.headerButton}>Docs</button>
-            <button className={styles.headerButtonPrimary}>New Project</button>
+          <div className={styles.topBarActions}>
+            <button className={styles.topBarButton}>Docs</button>
+            <button className={styles.topBarButtonPrimary}>New Project</button>
           </div>
         </header>
 
-        {/* Primary navigation tabs */}
-        <nav className={styles.tabsWrapper}>
-          <Tabs activeTab={tab} onTabChange={setTab} />
-        </nav>
+        {/* Main layout: sidebar + content */}
+        <div className={styles.layout}>
+          {/* Left sidebar with tabs */}
+          <aside className={styles.sidebar}>
+            <div className={styles.sidebarHeader}>Workspace</div>
+            <nav className={styles.tabsWrapper}>
+              {/* Tabs component renders the buttons; we style them in SCSS */}
+              <Tabs activeTab={tab} onTabChange={setTab} />
+            </nav>
+            <div className={styles.sidebarFooter}>
+              <span className={styles.sidebarHint}>SECURITY READINESS</span>
+            </div>
+          </aside>
 
-        {/* Page body */}
-        <main className={styles.mainContent}>
-          {tab === "dashboard" && <Dashboard />}
-          {tab === "projects" && <Projects showToast={showToast} />}
-          {tab === "queue" && <Queue showToast={showToast} />}
-          {tab === "agents" && <Agents />}
-          {tab === "lifecycle" && <Lifecycle />}
-          {tab === "knowledge" && <Knowledge />}
-          {tab === "settings" && <Settings />}
-        </main>
+          {/* Main content area */}
+          <main className={styles.mainContent}>
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>{TAB_LABELS[tab]}</h1>
+              <p className={styles.pageSubtitle}>
+                {tab === "dashboard"
+                  ? "Overview of your security readiness, agents, and current activity."
+                  : tab === "projects"
+                  ? "Manage and review security readiness projects."
+                  : tab === "queue"
+                  ? "Monitor queued analyses and automation runs."
+                  : tab === "agents"
+                  ? "Configure and observe your AI security agents."
+                  : tab === "lifecycle"
+                  ? "Track assessment lifecycle and remediation status."
+                  : tab === "knowledge"
+                  ? "Browse and curate security knowledge and playbooks."
+                  : "Configure console and integration settings."}
+              </p>
+            </div>
+
+            <div className={styles.pageBody}>
+              {tab === "dashboard" && <Dashboard />}
+              {tab === "projects" && <Projects showToast={showToast} />}
+              {tab === "queue" && <Queue showToast={showToast} />}
+              {tab === "agents" && <Agents />}
+              {tab === "lifecycle" && <Lifecycle />}
+              {tab === "knowledge" && <Knowledge />}
+              {tab === "settings" && <Settings />}
+            </div>
+          </main>
+        </div>
       </div>
 
       {/* Toast */}
       {toastMessage && (
         <div className={styles.toast}>
-          <span>{toastMessage}</span>
+          {toastMessage}
         </div>
       )}
 
-      {/* Modal (generic) */}
+      {/* Modal */}
       {modalContent && (
         <div className={styles.modal}>
-          <div>
+          <div className={styles.modalCard}>
             <h2 className={styles.modalTitle}>Details</h2>
             <div className={styles.modalBody}>{modalContent}</div>
             <div className={styles.modalFooter}>
