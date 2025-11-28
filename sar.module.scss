@@ -1,4 +1,4 @@
-/* Root background */
+/* Root layout */
 .consoleContainer {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 100vh;
@@ -11,7 +11,7 @@
   align-items: flex-start;
 }
 
-/* White shell centered on the screen */
+/* White app shell */
 .shell {
   width: 100%;
   max-width: 1200px;
@@ -99,15 +99,14 @@
   filter: brightness(1.03);
 }
 
-/* Tabs row (horizontal) */
+/* Tabs bar */
 .tabsWrapper {
   padding: 0.75rem 2rem 0.9rem;
   border-bottom: 1px solid #e5e7eb;
   background-color: #ffffff;
 }
 
-/* If Tabs renders <button>, these styles will apply.
-   If it uses links/divs, you can adapt similarly. */
+/* Style tabs component buttons when inside tabsWrapper */
 .tabsWrapper button {
   background-color: #f3f4f6;
   border: 1px solid #e5e7eb;
@@ -127,6 +126,7 @@
   color: #1d4ed8;
 }
 
+/* If your Tabs.tsx adds an "active" class, this will be applied */
 .tabsWrapper button.active {
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
   border-color: transparent;
@@ -142,36 +142,14 @@
   box-sizing: border-box;
 }
 
-/* Generic card you can reuse inside Dashboard / others */
-.card {
-  background-color: #ffffff;
-  border-radius: 0.9rem;
-  border: 1px solid #e5e7eb;
-  padding: 1.4rem 1.5rem;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
-}
-
-/* Toast */
+/* Toast (wrapper) – your Toast.tsx still uses its own Tailwind classes */
 .toast {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  padding: 0.75rem 1.1rem;
-  background-color: #111827;
-  color: #f9fafb;
-  border-radius: 0.8rem;
-  font-size: 0.85rem;
-  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.5);
-  z-index: 1000;
 }
 
-/* Modal */
+/* Modal overlay */
 .modal {
   position: fixed;
   inset: 0;
@@ -182,6 +160,7 @@
   z-index: 1200;
 }
 
+/* Modal card */
 .modalCard {
   width: 420px;
   max-width: 90%;
@@ -227,7 +206,7 @@
   background-color: #e5e7eb;
 }
 
-/* Responsive tweaks */
+/* Responsive */
 @media (max-width: 900px) {
   .consoleContainer {
     padding: 1.25rem;
