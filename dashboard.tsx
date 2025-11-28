@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { callLLM } from "../utils/mockLLM";
 
-type Sender = "orchestrator" | "user";
-
 interface ChatMessage {
-  sender: Sender;
+  sender: "user" | "orchestrator";
   text: string;
 }
 
@@ -13,153 +11,155 @@ const Dashboard: React.FC = () => {
     { sender: "orchestrator", text: "Welcome! Ask me anything." },
   ]);
   const [isThinking, setIsThinking] = useState(false);
+  const [input, setInput] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const inputEl = document.getElementById("advisor-input") as HTMLInputElement;
-    if (!inputEl) return;
-    const input = inputEl.value.trim();
-    if (!input) return;
+    const trimmed = input.trim();
+    if (!trimmed) return;
 
-    setChat((prev) => [...prev, { sender: "user", text: input }]);
-    inputEl.value = "";
+    setChat((prev) => [...prev, { sender: "user", text: trimmed }]);
+    setInput("");
     setIsThinking(true);
 
-    const result = await callLLM(`Answer: ${input}`);
-    setChat((prev) => [
-      ...prev,
-      { sender: "orchestrator", text: result },
-    ]);
-    setIsThinking(false);
+    try {
+      const result = await callLLM(`Answer: ${trimmed}`);
+      setChat((prev) => [
+        ...prev,
+        { sender: "orchestrator", text: result },
+      ]);
+    } catch (err) {
+      setChat((prev) => [
+        ...prev,
+        {
+          sender: "orchestrator",
+          text: "Sorry, I couldn't generate a response.",
+        },
+      ]);
+    } finally {
+      setIsThinking(false);
+    }
   };
 
   return (
-    <div>
-      {/* Page heading */}
-      <div style={{ marginBottom: "1.5rem" }}>
-        <p
+    <div style={{ paddingTop: "0.5rem" }}>
+      <h2
+        style={{
+          fontSize: "1.7rem",
+          fontWeight: 700,
+          marginBottom: "0.3rem",
+        }}
+      >
+        Dashboard
+      </h2>
+      <p
+        style={{
+          color: "#6b7280",
+          fontSize: "0.9rem",
+          marginBottom: "1.3rem",
+        }}
+      >
+        Security Readiness Advisor – ask questions and explore insights.
+      </p>
+
+      <div
+        style={{
+          borderRadius: "0.9rem",
+          border: "1px solid #e5e7eb",
+          backgroundColor: "rgba(255,255,255,0.95)",
+          boxShadow: "0 3px 10px rgba(15,23,42,0.06)",
+          padding: "1.25rem 1.3rem",
+          maxWidth: "720px",
+        }}
+      >
+        <h3
           style={{
-            fontSize: "11px",
+            margin: "0 0 0.8rem",
+            fontSize: "1.05rem",
             fontWeight: 600,
-            textTransform: "uppercase",
-            letterSpacing: "0.18em",
-            color: "#6b7280",
-            margin: 0,
-          }}
-        >
-          Dashboard
-        </p>
-        <h2
-          style={{
-            margin: "0.25rem 0 0",
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "#0f172a",
+            color: "#111827",
           }}
         >
           Security Readiness Advisor
-        </h2>
-        <p
-          style={{
-            margin: "0.35rem 0 0",
-            fontSize: "0.9rem",
-            color: "#6b7280",
-          }}
-        >
-          Ask questions about security readiness, projects, agents, and tasks.
-        </p>
-      </div>
+        </h3>
 
-      {/* Advisor card */}
-      <div
-        style={{
-          borderRadius: "1rem",
-          border: "1px solid #e5e7eb",
-          backgroundColor: "#f9fafb",
-          padding: "1.25rem 1.5rem",
-        }}
-      >
-        {/* Messages */}
+        {/* Chat area */}
         <div
           style={{
-            marginBottom: "1rem",
-            maxHeight: "18rem",
+            maxHeight: "260px",
             overflowY: "auto",
+            padding: "0.15rem 0.1rem 0.75rem",
+            marginBottom: "0.75rem",
+            borderBottom: "1px solid #e5e7eb",
           }}
         >
-          {chat.map((msg, idx) => (
+          {chat.map((msg, i) => (
             <div
-              key={idx}
+              key={i}
               style={{
                 display: "flex",
                 justifyContent:
                   msg.sender === "user" ? "flex-end" : "flex-start",
-                marginBottom: "0.4rem",
+                marginBottom: "0.45rem",
               }}
             >
-              <span
+              <div
                 style={{
-                  display: "inline-block",
                   maxWidth: "80%",
-                  padding: "0.4rem 0.7rem",
-                  borderRadius: "0.75rem",
-                  fontSize: "0.9rem",
-                  boxShadow: "0 2px 6px rgba(15, 23, 42, 0.15)",
+                  padding: "0.45rem 0.65rem",
+                  borderRadius:
+                    msg.sender === "user" ? "0.75rem 0.75rem 0.1rem 0.75rem" : "0.75rem 0.75rem 0.75rem 0.1rem",
                   backgroundColor:
-                    msg.sender === "user" ? "#2563eb" : "#ffffff",
+                    msg.sender === "user" ? "#2563eb" : "#f3f4f6",
                   color: msg.sender === "user" ? "#ffffff" : "#111827",
+                  fontSize: "0.85rem",
                 }}
               >
                 {msg.text}
-              </span>
+              </div>
             </div>
           ))}
+          {isThinking && (
+            <p
+              style={{
+                fontSize: "0.8rem",
+                color: "#9ca3af",
+                fontStyle: "italic",
+              }}
+            >
+              Thinking…
+            </p>
+          )}
         </div>
 
-        {isThinking && (
-          <p
-            style={{
-              marginBottom: "0.5rem",
-              fontSize: "0.8rem",
-              fontStyle: "italic",
-              color: "#9ca3af",
-            }}
-          >
-            Thinking…
-          </p>
-        )}
-
-        {/* Input row */}
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", gap: "0.75rem" }}
-        >
+        {/* Input */}
+        <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.5rem" }}>
           <input
-            id="advisor-input"
             type="text"
-            placeholder="Ask a question…"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask a question..."
             style={{
               flex: 1,
-              borderRadius: "0.5rem",
+              borderRadius: "0.7rem",
               border: "1px solid #d1d5db",
               padding: "0.45rem 0.7rem",
               fontSize: "0.9rem",
-              color: "#111827",
-              outline: "none",
             }}
           />
           <button
             type="submit"
             disabled={isThinking}
             style={{
-              borderRadius: "0.5rem",
+              borderRadius: "0.7rem",
               border: "none",
-              padding: "0.45rem 0.9rem",
+              backgroundColor: "#2563eb",
+              color: "#ffffff",
+              padding: "0.45rem 0.95rem",
               fontSize: "0.9rem",
               fontWeight: 600,
-              color: "#ffffff",
-              backgroundColor: isThinking ? "#93c5fd" : "#2563eb",
               cursor: isThinking ? "default" : "pointer",
+              opacity: isThinking ? 0.65 : 1,
             }}
           >
             Send

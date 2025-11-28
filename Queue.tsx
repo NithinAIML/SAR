@@ -24,9 +24,7 @@ const Queue: React.FC<QueueProps> = ({ showToast }) => {
   const generateTasks = async () => {
     setIsThinking(true);
     try {
-      const result = await callLLM(
-        "Suggest 5 to 7 high-level, actionable tasks"
-      );
+      const result = await callLLM("Suggest 5 to 7 high-level, actionable tasks");
       const parsed: string[] = JSON.parse(result);
       const newTasks: Task[] = parsed.map((title) => ({
         id: `TSK-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`,
@@ -35,18 +33,40 @@ const Queue: React.FC<QueueProps> = ({ showToast }) => {
       }));
       setTasks((prev) => [...prev, ...newTasks]);
       showToast("Tasks generated successfully");
-    } catch {
+    } catch (e) {
       showToast("Failed to generate tasks");
+    } finally {
+      setIsThinking(false);
     }
-    setIsThinking(false);
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div style={{ paddingTop: "0.5rem" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          gap: "1rem",
+          marginBottom: "1.1rem",
+        }}
+      >
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Task Queue</h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <h2
+            style={{
+              fontSize: "1.7rem",
+              fontWeight: 700,
+              marginBottom: "0.3rem",
+            }}
+          >
+            Task Queue
+          </h2>
+          <p
+            style={{
+              color: "#6b7280",
+              fontSize: "0.9rem",
+            }}
+          >
             Upcoming actions for your agents to execute.
           </p>
         </div>
@@ -54,33 +74,76 @@ const Queue: React.FC<QueueProps> = ({ showToast }) => {
         <button
           onClick={generateTasks}
           disabled={isThinking}
-          className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:opacity-60"
+          style={{
+            borderRadius: "0.7rem",
+            border: "none",
+            backgroundColor: "#2563eb",
+            color: "#ffffff",
+            padding: "0.4rem 0.9rem",
+            fontSize: "0.85rem",
+            fontWeight: 600,
+            cursor: isThinking ? "default" : "pointer",
+            opacity: isThinking ? 0.6 : 1,
+          }}
         >
           {isThinking ? "Generating…" : "Suggest Tasks"}
         </button>
       </div>
 
-      <div className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white/60 shadow-sm">
-        {tasks.map((task) => (
-          <div key={task.id} className="flex gap-3 px-4 py-3 text-sm">
-            <div className="mt-1 h-2 w-2 rounded-full bg-blue-500" />
-            <div className="flex-1">
-              <p className="font-medium text-slate-900">{task.title}</p>
-              <p className="mt-1 text-xs text-slate-500">
-                <span className="font-semibold text-slate-600">Assignee:</span>{" "}
-                <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-700">
-                  {task.assignee}
-                </span>
-              </p>
-              <p className="mt-0.5 text-[11px] text-slate-400">{task.id}</p>
-            </div>
-          </div>
-        ))}
-
-        {tasks.length === 0 && (
-          <div className="px-4 py-3 text-sm text-slate-500">
-            No queued tasks. Generate new tasks to keep agents busy.
-          </div>
+      <div
+        style={{
+          borderRadius: "0.9rem",
+          border: "1px solid #e5e7eb",
+          backgroundColor: "rgba(255,255,255,0.95)",
+          boxShadow: "0 3px 10px rgba(15,23,42,0.06)",
+          padding: "1.1rem 1.3rem",
+        }}
+      >
+        {tasks.length === 0 ? (
+          <p style={{ fontSize: "0.9rem", color: "#6b7280" }}>
+            No queued tasks. Generate tasks to keep agents busy.
+          </p>
+        ) : (
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {tasks.map((t) => (
+              <li
+                key={t.id}
+                style={{
+                  padding: "0.6rem 0",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "0.95rem",
+                    fontWeight: 500,
+                    color: "#111827",
+                  }}
+                >
+                  {t.title}
+                </p>
+                <p
+                  style={{
+                    margin: "0.2rem 0 0",
+                    fontSize: "0.85rem",
+                    color: "#4b5563",
+                  }}
+                >
+                  <strong>Assignee:</strong> {t.assignee}
+                </p>
+                <p
+                  style={{
+                    margin: "0.15rem 0 0",
+                    fontSize: "0.8rem",
+                    color: "#9ca3af",
+                  }}
+                >
+                  {t.id}
+                </p>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </div>
