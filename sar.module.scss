@@ -1,78 +1,77 @@
-/* src/securityreadiness/SecurityReadinessConsole.module.scss */
-
-/* ---------- GLOBAL LAYOUT ---------- */
-
+/* Root background */
 .consoleContainer {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 100vh;
   margin: 0;
-  padding: 2rem;
+  padding: 2.5rem;
   box-sizing: border-box;
-  background: radial-gradient(circle at top left, #0b1120 0, #020617 35%, #020617 100%);
+  background: radial-gradient(circle at top left, #e5edff 0, #f4f6fb 40%, #eef1f7 100%);
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
+/* White shell centered on the screen */
 .shell {
   width: 100%;
-  max-width: 1280px;
-  background: #0b1220;
+  max-width: 1200px;
+  background-color: #ffffff;
   border-radius: 1.25rem;
-  box-shadow: 0 32px 80px rgba(15, 23, 42, 0.85);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* ---------- TOP BAR ---------- */
-
-.topBar {
+/* Header */
+.header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.75rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.28);
-  background: linear-gradient(90deg, #020617 0%, #0b1220 55%, #020617 100%);
-}
-
-.logoBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  align-items: flex-start;
+  padding: 1.75rem 2rem 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 1.5rem;
 }
 
 .productBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.1rem 0.6rem;
+  padding: 0.1rem 0.55rem;
   border-radius: 999px;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.1);
+  letter-spacing: 0.12em;
+  color: #2563eb;
+  background-color: rgba(37, 99, 235, 0.08);
+  margin-bottom: 0.4rem;
 }
 
-.productName {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #e5e7eb;
+.title {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.topBarActions {
+.subtitle {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.headerActions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.topBarButton,
-.topBarButtonPrimary {
+.headerButton,
+.headerButtonPrimary {
   border-radius: 999px;
   border: 1px solid transparent;
-  padding: 0.4rem 0.9rem;
+  padding: 0.45rem 0.95rem;
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -80,181 +79,103 @@
   white-space: nowrap;
 }
 
-.topBarButton {
-  background: transparent;
-  border-color: rgba(148, 163, 184, 0.4);
-  color: #e5e7eb;
+.headerButton {
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+  color: #374151;
 }
 
-.topBarButton:hover {
-  background: rgba(148, 163, 184, 0.14);
+.headerButton:hover {
+  background-color: #f3f4f6;
 }
 
-.topBarButtonPrimary {
-  background: linear-gradient(135deg, #38bdf8, #2563eb);
-  color: #0b1120;
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.6);
+.headerButtonPrimary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.35);
 }
 
-.topBarButtonPrimary:hover {
-  filter: brightness(1.05);
+.headerButtonPrimary:hover {
+  filter: brightness(1.03);
 }
 
-/* ---------- MAIN LAYOUT ---------- */
-
-.layout {
-  display: flex;
-  min-height: 560px;
-}
-
-/* ---------- SIDEBAR ---------- */
-
-.sidebar {
-  width: 220px;
-  border-right: 1px solid rgba(148, 163, 184, 0.25);
-  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.15), transparent 45%),
-              #020617;
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 1rem;
-  box-sizing: border-box;
-}
-
-.sidebarHeader {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: #94a3b8;
-  margin-bottom: 1rem;
-}
-
-/* Tabs rendered vertically inside sidebar */
+/* Tabs row (horizontal) */
 .tabsWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  padding: 0.75rem 2rem 0.9rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #ffffff;
 }
 
-/* Assumes Tabs renders <button> elements */
+/* If Tabs renders <button>, these styles will apply.
+   If it uses links/divs, you can adapt similarly. */
 .tabsWrapper button {
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border-radius: 0.8rem;
-  border: 1px solid transparent;
-  padding: 0.55rem 0.75rem;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  padding: 0.55rem 1.1rem;
+  margin-right: 0.5rem;
+  border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #cbd5f5;
   cursor: pointer;
   transition: all 0.18s ease;
 }
 
 .tabsWrapper button:hover {
-  background: rgba(148, 163, 184, 0.14);
-  border-color: rgba(148, 163, 184, 0.45);
+  background-color: #e5edff;
+  border-color: #2563eb;
+  color: #1d4ed8;
 }
 
 .tabsWrapper button.active {
-  background: radial-gradient(circle at left, #38bdf8, #2563eb);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   border-color: transparent;
-  color: #0b1120;
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.6);
+  color: #ffffff;
+  box-shadow: 0 8px 14px rgba(37, 99, 235, 0.35);
 }
 
-.sidebarFooter {
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(30, 64, 175, 0.45);
-}
-
-.sidebarHint {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.9);
-}
-
-/* ---------- MAIN CONTENT ---------- */
-
+/* Main content area */
 .mainContent {
-  flex: 1;
   padding: 1.5rem 2rem 2rem;
-  background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.16), transparent 55%),
-              #020617;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.pageHeader {
-  margin-bottom: 0.25rem;
-}
-
-.pageTitle {
-  margin: 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #e5e7eb;
-}
-
-.pageSubtitle {
-  margin: 0.35rem 0 0;
-  font-size: 0.9rem;
-  color: #9ca3af;
-}
-
-.pageBody {
-  margin-top: 0.75rem;
-  background: rgba(15, 23, 42, 0.96);
-  border-radius: 1rem;
-  border: 1px solid rgba(51, 65, 85, 0.9);
-  padding: 1.25rem 1.35rem 1.5rem;
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
-  min-height: 380px;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  min-height: 420px;
   box-sizing: border-box;
 }
 
-/* You can reuse this card class inside Dashboard / others */
+/* Generic card you can reuse inside Dashboard / others */
 .card {
-  background: #020617;
+  background-color: #ffffff;
   border-radius: 0.9rem;
-  border: 1px solid rgba(51, 65, 85, 0.9);
-  padding: 1.1rem 1.25rem;
-  color: #e5e7eb;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  border: 1px solid #e5e7eb;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
 }
 
-/* ---------- TOAST ---------- */
-
+/* Toast */
 .toast {
   position: fixed;
-  bottom: 1.4rem;
-  right: 1.4rem;
-  padding: 0.8rem 1.1rem;
-  background: #0f172a;
-  color: #e5e7eb;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  padding: 0.75rem 1.1rem;
+  background-color: #111827;
+  color: #f9fafb;
   border-radius: 0.8rem;
   font-size: 0.85rem;
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.5);
   z-index: 1000;
 }
 
-/* ---------- MODAL ---------- */
-
+/* Modal */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,12 +185,11 @@
 .modalCard {
   width: 420px;
   max-width: 90%;
-  background: #020617;
+  background-color: #ffffff;
   border-radius: 1rem;
-  padding: 1.5rem 1.6rem 1.25rem;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  box-shadow: 0 30px 80px rgba(15, 23, 42, 1);
-  color: #e5e7eb;
+  padding: 1.6rem 1.7rem 1.3rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.6);
+  border: 1px solid #e5e7eb;
   box-sizing: border-box;
 }
 
@@ -277,11 +197,12 @@
   margin: 0 0 0.75rem;
   font-size: 1.05rem;
   font-weight: 600;
+  color: #111827;
 }
 
 .modalBody {
-  font-size: 0.92rem;
-  color: #cbd5f5;
+  font-size: 0.93rem;
+  color: #4b5563;
   margin-bottom: 1.2rem;
 }
 
@@ -292,58 +213,42 @@
 
 .modalSecondary {
   border-radius: 0.7rem;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  background: #020617;
-  color: #e5e7eb;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #111827;
   padding: 0.45rem 0.9rem;
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all 0.16s ease;
 }
 
 .modalSecondary:hover {
-  background: rgba(148, 163, 184, 0.16);
+  background-color: #e5e7eb;
 }
 
-/* ---------- RESPONSIVE ---------- */
-
-@media (max-width: 960px) {
+/* Responsive tweaks */
+@media (max-width: 900px) {
   .consoleContainer {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
-  .layout {
+  .header {
     flex-direction: column;
+    align-items: flex-start;
   }
 
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    padding: 0.9rem 1rem;
-    gap: 1rem;
-  }
-
-  .sidebarHeader {
-    margin: 0;
+  .headerActions {
+    align-self: stretch;
+    justify-content: flex-start;
   }
 
   .tabsWrapper {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .tabsWrapper button {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
-  .sidebarFooter {
-    display: none;
+    padding: 0.6rem 1.25rem 0.8rem;
+    overflow-x: auto;
   }
 
   .mainContent {
-    padding: 1.25rem 1.25rem 1.6rem;
+    padding: 1.25rem 1.25rem 1.75rem;
   }
 }
